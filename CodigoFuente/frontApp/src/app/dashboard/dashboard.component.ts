@@ -14,6 +14,7 @@ Chart.register(...registerables);
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
+
   city: string = 'Cali';
   weatherData: any = { weather: [] };
   projectsTotal = 0;
@@ -35,9 +36,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   temp: any = null;  // Variable para la temperatura
   descripcion : any=null;
 
+  offcanvasInstance: any;
+
   constructor(private weatherService: WeatherService, private dashboardService: DashboardService, private cdr: ChangeDetectorRef, private overlayContainer: OverlayContainer) { }
 
   ngOnInit(): void {
+
+    // Obtener el elemento del Offcanvas
+
+
     const user = JSON.parse(localStorage.getItem('usuario') || '{}');
     this.username = user?.user || 'Usuario';
     this.loadDashboardData();
@@ -169,9 +176,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   calcularTiempo(fecha: string): string {
     return moment(fecha, "YYYY-MM-DD HH:mm:ss").fromNow();
   }
+
   closeModal() {
     this.overlayContainer.getContainerElement().classList.remove('cdk-overlay-container');
   }
+
+
+
 //cargamos datos para la vista del dsahboard
 
   loadDashboardData() {
@@ -197,5 +208,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       },
       error: (err) => console.error('Error al obtener datos del dashboard', err)
     });
+  }
+
+
+
+  cerrarOffcanvas() {
+
+    document.getElementById('offcanvasNotifications')?.classList.remove('show');
+    document.body.classList.remove('offcanvas-backdrop'); // Elimina el fondo oscuro si queda activo
+
   }
 }
