@@ -2524,15 +2524,6 @@
       "area": "Staff"
     },
     {
-      "id": "59",
-      "name": "Kieran",
-      "last_name": "Mendez",
-      "url_photo": "",
-      "rol": 2,
-      "list": "Angular|React-Native",
-      "area": "Soporte"
-    },
-    {
       "id": "60",
       "name": "Jonas",
       "last_name": "Roy",
@@ -3001,20 +2992,6 @@
     },
     {
       "id": "e15e",
-      "name": "",
-      "last_name": "",
-      "rol": "",
-      "list": [],
-      "area": "",
-      "warning_count": 0,
-      "errors_count": 0,
-      "deploy_count": 0,
-      "percentage_completion": 0,
-      "report_nc": 0,
-      "status": "En Desarrollo"
-    },
-    {
-      "id": "acbf",
       "name": "",
       "last_name": "",
       "rol": "",

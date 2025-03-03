@@ -3,18 +3,26 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
-
+import { AuthService } from '../usuarioo/auth.service';
+import { CONSTANTS } from '../Util/Constantes';
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardService {
-  private apiUrl = 'http://localhost:3000/dashboard_cards';
-  private apiCpureport = 'http://localhost:3000/cpu_report';
-  private apiReportCommi = 'http://localhost:3000/report_commits';
-  private apiNotifica = 'http://localhost:3000/notification';
+   apiUrl = '';
+   apiCpureport = '';
+   apiReportCommi = '';
+   apiNotifica = '';
 
   weatherData: any = { weather: [] }
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public authService: AuthService) {
+
+    this.apiUrl=CONSTANTS.URLCARD;
+    this.apiCpureport=CONSTANTS.URLCPUREPORT;
+    this.apiReportCommi=CONSTANTS.URLCPUREPORT_COMITS;
+    this.apiNotifica=CONSTANTS.URLNOTIFI;
+
+  }
 
   private transformKeysToCamelCase(obj: any): any {
     if (Array.isArray(obj)) {

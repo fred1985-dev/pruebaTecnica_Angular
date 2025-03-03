@@ -77,7 +77,6 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import {CdkStepperModule} from '@angular/cdk/stepper';
 import {CdkTableModule} from '@angular/cdk/table';
 import {CdkTreeModule} from '@angular/cdk/tree';
-import { PaginatorComponent } from './paginator/paginator.component';
 
 //formulario
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -91,7 +90,7 @@ const routes: Routes =[
   { path: 'roles', component: RolComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'Admin' } },
   {path:'login', component: LoginComponent},
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard]  },
-  { path: '**', redirectTo: '/login' }
+
 ]
 
 
@@ -99,7 +98,6 @@ const routes: Routes =[
   declarations: [
     UsersComponent,
     AppComponent,
-    PaginatorComponent,
     LoginComponent,
     HeaderComponent,
     FooterComponent,
