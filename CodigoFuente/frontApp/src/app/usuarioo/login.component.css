@@ -1,0 +1,24 @@
+.card-header h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #007bff; /* cualquier color que te guste */
+}
+
+.card-header p {
+  font-size: 1rem;
+  color: #555;
+}
+/* Agregar margen superior e inferior a la card */
+.card {
+  margin-top: 50px; /* Ajusta el valor según sea necesario */
+  margin-bottom: 50px;
+}
+
+/* Espaciado entre los inputs y el botón */
+.input-group {
+  margin-bottom: 20px; /* Ajusta el espaciado entre los elementos */
+}
+
+.form-group {
+  margin-top: 20px; /* Espaciado entre el formulario y el botón */
+}

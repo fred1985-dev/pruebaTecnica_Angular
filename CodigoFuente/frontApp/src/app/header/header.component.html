@@ -1,0 +1,48 @@
+<div class="wrapper"  *ngIf="authService.isAuthenticated()">
+  <!-- Sidebar -->
+
+
+  <div id="content">
+    <nav id="sidebar">
+      <ul class="list-unstyled components">
+        <li>
+          <a routerLink="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        </li>
+        <li>
+          <a routerLink="/proyectos"><i class="fas fa-folder-open"></i> Proyectos</a>
+        </li>
+
+        <li>
+          <a routerLink="/users"><i class="fas fa-users"></i> Usuarios</a>
+        </li>
+        <li>
+          <a routerLink="/roles"><i class="fas fa-user-shield"></i> Roles</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <button class="btn btn-outline-dark" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="ml-auto d-flex align-items-center">
+        <i class="fas fa-bell text-muted mx-3" ></i>
+        <img src="assets/profile.png" alt="Foto" class="rounded-circle" width="40">
+        <div class="dropdown">
+          <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#" (click)="logout()">Cerrar Sesión</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Contenido dinámico de la app -->
+    <div class="container-fluid mt-3">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

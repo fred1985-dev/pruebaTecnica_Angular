@@ -1,0 +1,114 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="text-left"></h3>
+  <a class="btn btn-primary text-white" (click)="abrirModalNuevoUsuario()">Agregar Usuarios</a>
+</div>
+
+  <h2>Usuarios</h2>
+  <table  class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Rol</th>
+        <th>Tecnologías</th>
+        <th>Área</th>
+        <th>Proyectos</th>
+        <th  *ngIf="isAdmin" >Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuarios">
+        <td>
+          <img src="assets/profile.png" alt="Foto" class="rounded-circle" width="40" style="margin-right: 10px;">
+          {{ usuario.name }}
+        </td>
+        <td>{{ usuario.last_name }}</td>
+        <td>{{ obtenerRol(usuario.rol) }}</td>
+        <td>
+          <span *ngFor="let tecnologia of usuario.list">{{ tecnologia }} </span>
+
+        </td>
+        <td>{{ usuario.area }}</td>
+        <td>
+          <div *ngFor="let proyecto of usuario.projects">
+            <span>      {{ obtenerNombreProyecto(proyecto)  }}
+            </span>
+          </div>
+        </td>
+        <td>
+
+          <button class="btn btn-warning btn-sm" *ngIf="isAdmin" class="btn btn-warning" (click)="editarUsuario(usuario)">✏️</button>
+          <button class="btn btn-danger btn-sm" *ngIf="isAdmin" class="btn btn-danger" (click)="eliminarUsuario(usuario.id)" >🗑️</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  <div class="modal fade" id="modalNuevoUsuario" tabindex="-1" aria-labelledby="modalNuevoUsuarioLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 20%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Creamos un nuevo Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="usuarioForm">
+            <!-- Nombre -->
+            <div class="mb-3">
+              <label for="name" class="form-label">Nombre</label>
+              <input type="text" id="name" class="form-control" formControlName="name">
+              <small class="text-danger" *ngIf="campoEsInvalido('name')">
+                El nombre es obligatorio y debe tener al menos 3 caracteres.
+              </small>
+            </div>
+
+            <!-- Apellido -->
+            <div class="mb-3">
+              <label for="last_name" class="form-label">Apellido</label>
+              <input type="text" id="last_name" class="form-control" formControlName="last_name">
+              <small class="text-danger" *ngIf="campoEsInvalido('last_name')">
+                El apellido es obligatorio y debe tener al menos 3 caracteres.
+              </small>
+            </div>
+
+            <!-- Rol -->
+            <div class="mb-3">
+              <label for="rol" class="form-label">Rol</label>
+              <select id="rol" class="form-select" formControlName="rol">
+                <option value="">Seleccione un rol</option>
+                <option *ngFor="let rol of roles" [value]="rol.id">{{ rol.name }}</option>
+              </select>
+              <small class="text-danger" *ngIf="campoEsInvalido('rol')">
+                Debe seleccionar un rol.
+              </small>
+            </div>
+
+            <!-- Tecnologías -->
+            <div class="mb-3">
+              <label for="list" class="form-label">Tecnologías</label>
+              <input type="text" class="form-control" id="tecnologia" formControlName="list">
+              <small class="text-danger" *ngIf="campoEsInvalido('list')">
+                Debe ingresar al menos 2 caracteres.
+              </small>
+            </div>
+
+            <!-- Área -->
+            <div class="mb-3">
+              <label for="area" class="form-label">Área</label>
+              <input type="text" id="area" class="form-control" formControlName="area">
+              <small class="text-danger" *ngIf="campoEsInvalido('area')">
+                El área es obligatoria y debe tener al menos 3 caracteres.
+              </small>
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="crearUsuario()">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,162 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="text-left">Lista De Proyectos Registrados</h3>
+  <a class="btn btn-primary text-white" (click)="abrirModalNuevoProyecto()">Nuevo Proyecto</a>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Proyecto</th>
+      <th>Cliente</th>
+      <th>Repositorio</th>
+      <th>Desarrolladores</th>
+      <th>CI</th>
+      <th>CD</th>
+      <th>Frontend</th>
+      <th>Backend</th>
+      <th>DB</th>
+      <th>Alertas</th>
+      <th>Errores</th>
+      <th>Despliegues</th>
+      <th>Avance (%)</th>
+      <th>Reporta NC</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let proyecto of proyectos">
+      <td>{{ proyecto.project_name }}</td>
+      <td>{{ proyecto.client }}</td>
+      <td><a [href]="proyecto.repo_url" target="_blank">Repositorio</a></td>
+      <td>{{ proyecto.developers }}</td>
+      <td>{{ proyecto.ci ? '✔️' : '❌' }}</td>
+      <td>{{ proyecto.cd ? '✔️' : '❌' }}</td>
+      <td>{{ proyecto.frontend_tecnology }}</td>
+      <td>{{ proyecto.backend_tecnology }}</td>
+      <td>{{ proyecto.databases }}</td>
+      <td>{{ proyecto.warning_count }}</td>
+      <td>{{ proyecto.errors_count }}</td>
+      <td>{{ proyecto.deploy_count }}</td>
+      <td>{{ proyecto.percentage_completion }}%</td>
+      <td>{{ proyecto.report_nc }}</td>
+      <td>{{ proyecto.status }}</td>
+      <td>
+        <button class="btn btn-warning btn-sm">✏️</button>
+        <button class="btn btn-danger btn-sm" >🗑️</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Modal Nuevo Proyecto -->
+<div class="modal fade" id="modalNuevoProyecto" tabindex="-1" aria-labelledby="modalNuevoProyectoLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 20%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Creamos un nuevo Proyecto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="proyectoForm">
+          <div class="mb-3">
+            <label class="form-label">Proyecto</label>
+            <input type="text" class="form-control" formControlName="project_name">
+            <small class="text-danger" *ngIf="campoEsInvalido('project_name')">
+              El nombre del proyecto es obligatorio y debe tener al menos 3 caracteres.
+            </small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Cliente</label>
+            <input type="text" class="form-control" formControlName="client">
+            <small class="text-danger" *ngIf="campoEsInvalido('client')">
+              El cliente es obligatorio y debe tener al menos 3 caracteres.
+            </small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Repositorio</label>
+            <input type="text" class="form-control" formControlName="repo_url">
+            <small class="text-danger" *ngIf="campoEsInvalido('repo_url')">
+              Debe ser una URL válida (ejemplo: https://github.com/usuario/repo).
+            </small>
+          </div>
+
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="ci" formControlName="ci">
+            <label class="form-check-label" for="ci">Tiene Integración Continua</label>
+          </div>
+
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="cd" formControlName="cd">
+            <label class="form-check-label" for="cd">Tiene Despliegue Continuo</label>
+          </div>
+
+          <!-- Desarrolladores -->
+          <div class="mb-3">
+            <label class="form-label">Desarrolladores</label>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Selecciona desarrolladores</mat-label>
+              <mat-select formControlName="developers" multiple panelClass="custom-dropdown">
+                <mat-option *ngFor="let dev of developersFiltrados" [value]="dev.id">
+                  {{ dev.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Frontend -->
+          <div class="mb-3">
+            <label class="form-label">Frontend</label>
+            <mat-form-field appearance="outline" class="w-100" >
+              <mat-label>Selecciona tecnologías Frontend</mat-label>
+              <mat-select formControlName="frontend_tecnology" multiple  panelClass="mat-select-dropdown">
+                <mat-option *ngFor="let tech of listaFrontend" [value]="tech">
+                  {{ tech }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Backend -->
+          <div class="mb-3">
+            <label class="form-label">Backend</label>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Selecciona tecnologías Backend</mat-label>
+              <mat-select formControlName="backend_tecnology" multiple  panelClass="mat-select-dropdown">
+                <mat-option *ngFor="let tech of listaBackend" [value]="tech">
+                  {{ tech }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Bases de Datos -->
+          <div class="mb-3">
+            <label class="form-label">Base de Datos</label>
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Selecciona bases de datos</mat-label>
+              <mat-select formControlName="databases" multiple  panelClass="mat-select-dropdown">
+                <mat-option *ngFor="let db of listaBasesDatos" [value]="db">
+                  {{ db }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </form>
+
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="crearProyecto()" [disabled]="proyectoForm.invalid">
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

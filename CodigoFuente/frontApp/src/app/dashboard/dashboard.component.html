@@ -1,0 +1,85 @@
+<div class="dashboard-container" >
+
+  <!-- Primera Columna -->
+  <div class="left-column">
+    <h2>Bienvenido {{ username }}</h2>
+
+    <!-- Clima -->
+<!-- DashboardComponent -->
+<mat-card class="clima-card" *ngIf="weatherData">
+  <h2>Clima en {{ weatherData.name || city }}</h2>  <!-- Muestra el nombre de la ciudad correctamente -->
+  <div >
+    <p>Temperatura: {{ temp }}°C</p>
+    <p>Condición: {{ descripcion }}</p>
+  </div>
+
+  <p>🌤️ Estado: {{ descripcion }}</p>
+
+  <img *ngIf="weatherData?.weather?.[0]" [src]="'https://openweathermap.org/img/wn/' + weatherData?.weather?.[0]?.icon + '.png'" alt="Clima">
+</mat-card>
+
+
+<!-- Modal de Notificaciones -->
+<div class="offcanvas offcanvas-end show" id="offcanvasNotifications" tabindex="-1" aria-labelledby="offcanvasLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasLabel">Notificaciones</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="list-group">
+      <li *ngFor="let noti of notificationReport" class="list-group-item d-flex justify-content-between align-items-start">
+        <div>
+          <span [ngClass]="{'text-danger': noti.type === 'error', 'text-warning': noti.type === 'warning'}">
+            <strong>{{ noti.details }}</strong>
+          </span>
+          <br>
+          <small class="text-muted">{{ calcularTiempo(noti.time) }}</small>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+    <!-- Gráfica del Servidor -->
+    <mat-card class="servidor-card">
+      <h2>📊 Detalles del Servidor</h2>
+      <canvas id="serverChart"></canvas>
+    </mat-card>
+  </div>
+
+  <!-- Segunda Columna -->
+  <div class="right-column">
+    <div class="metrics-grid">
+      <mat-card class="metric-card">
+        <h3>📁 Proyectos Registrados</h3>
+        <p>{{ projectsTotal }}</p>
+        <small>Último proyecto hace {{ lastProjectDays }} días</small>
+      </mat-card>
+
+      <mat-card class="metric-card">
+        <h3>🚀 Proyectos en Desarrollo</h3>
+        <p>{{ projectsInDev }}</p>
+        <small>Total avance</small>
+      </mat-card>
+
+      <mat-card class="metric-card">
+        <h3>🛠️ NC sin resolver</h3>
+        <p>{{ ncTotal }}</p>
+        <small>Última NC hace {{ pendingNC }} días</small>
+      </mat-card>
+
+      <mat-card class="metric-card">
+        <h3>⚠️ Cantidad de Errores</h3>
+        <p>{{ errorTotal }}</p>
+        <small>Último error hace {{ lastErrorHours }} horas</small>
+      </mat-card>
+    </div>
+
+    <!-- Reporte de Commits -->
+    <mat-card class="commits-card">
+      <h2>📜 Reporte de Commits</h2>
+      <canvas id="commitsChart"></canvas>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+.cdk-overlay-container {
+  z-index: 1060 !important;
+}
+
+/*se renderiza dentro del body para que las opcipnes de los select multiple quede por dentro*/
